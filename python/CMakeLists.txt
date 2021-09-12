@@ -19,6 +19,7 @@ add_subdirectory(bindings)
 ########################################################################
 # Install python sources
 ########################################################################
+message(STATUS "GR_PYTHON_DIR = ${GR_PYTHON_DIR}")
 GR_PYTHON_INSTALL(
     FILES
     __init__.py

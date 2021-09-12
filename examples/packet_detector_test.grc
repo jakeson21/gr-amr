@@ -36,7 +36,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '100'
+    value: '20000'
   states:
     bus_sink: false
     bus_source: false
@@ -44,6 +44,22 @@ blocks:
     coordinate: [184, 12]
     rotation: 0
     state: enabled
+- name: amr_packet_detector_0
+  id: amr_packet_detector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    sample_rate: samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [472, 188.0]
+    rotation: 0
+    state: true
 - name: analog_sig_source_x_0
   id: analog_sig_source_x
   parameters:
@@ -51,7 +67,7 @@ blocks:
     alias: ''
     amp: '1'
     comment: ''
-    freq: '0.5'
+    freq: samp_rate/4
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
@@ -66,21 +82,18 @@ blocks:
     coordinate: [24, 140.0]
     rotation: 0
     state: true
-- name: blocks_null_sink_0
-  id: blocks_null_sink
+- name: blocks_message_debug_0
+  id: blocks_message_debug
   parameters:
     affinity: ''
     alias: ''
-    bus_structure_sink: '[[0,],]'
     comment: ''
-    num_inputs: '1'
-    type: float
-    vlen: '1'
+    en_uvec: 'True'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [432, 184.0]
+    coordinate: [752, 192.0]
     rotation: 0
     state: true
 - name: blocks_throttle_0
@@ -157,7 +170,7 @@ blocks:
     marker9: '-1'
     name: '""'
     nconnections: '1'
-    size: '10'
+    size: '2048'
     srate: samp_rate
     stemplot: 'False'
     style1: '1'
@@ -196,13 +209,14 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [448, 52.0]
+    coordinate: [456, 76.0]
     rotation: 0
     state: true
 
 connections:
+- [amr_packet_detector_0, pdu, blocks_message_debug_0, print]
 - [analog_sig_source_x_0, '0', blocks_throttle_0, '0']
-- [blocks_throttle_0, '0', blocks_null_sink_0, '0']
+- [blocks_throttle_0, '0', amr_packet_detector_0, '0']
 - [blocks_throttle_0, '0', qtgui_time_sink_x_0, '0']
 
 metadata:

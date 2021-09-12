@@ -144,7 +144,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1168, 172.0]
+    coordinate: [1176, 172.0]
     rotation: 0
     state: true
 - name: blocks_complex_to_mag_0
@@ -160,7 +160,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [688, 176.0]
+    coordinate: [648, 176.0]
     rotation: 0
     state: enabled
 - name: blocks_message_debug_0
@@ -483,9 +483,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [992, 68.0]
+    coordinate: [1008, 68.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0_0
   id: qtgui_time_sink_x
   parameters:
@@ -539,7 +539,7 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: '""'
+    name: '"Bits"'
     nconnections: '1'
     size: '3000'
     srate: samp_rate
@@ -557,7 +557,7 @@ blocks:
     tr_chan: '0'
     tr_delay: '0'
     tr_level: '0.5'
-    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_mode: qtgui.TRIG_MODE_NORM
     tr_slope: qtgui.TRIG_SLOPE_POS
     tr_tag: '""'
     type: float
@@ -580,9 +580,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1152, 68.0]
+    coordinate: [1192, 68.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0_1
   id: qtgui_time_sink_x
   parameters:
@@ -679,7 +679,7 @@ blocks:
     bus_structure: null
     coordinate: [832, 68.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_waterfall_sink_x_0
   id: qtgui_waterfall_sink_x
   parameters:
@@ -740,7 +740,7 @@ blocks:
     bus_structure: null
     coordinate: [808, 336.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: uhd_usrp_source_1
   id: uhd_usrp_source
   parameters:
@@ -1179,7 +1179,7 @@ blocks:
     state: true
 
 connections:
-- [amr_packet_detector_0, packet, blocks_message_debug_0, print]
+- [amr_packet_detector_0, pdu, blocks_message_debug_0, print]
 - [blocks_complex_to_mag_0, '0', blocks_nlog10_ff_0, '0']
 - [blocks_complex_to_mag_0, '0', qtgui_time_sink_x_0_1, '0']
 - [blocks_multiply_const_vxx_0, '0', blocks_complex_to_mag_0, '0']

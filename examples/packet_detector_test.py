@@ -34,6 +34,7 @@ import signal
 from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
+import amr
 
 
 
@@ -75,13 +76,13 @@ class packet_detector_test(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 100
+        self.samp_rate = samp_rate = 20000
 
         ##################################################
         # Blocks
         ##################################################
         self.qtgui_time_sink_x_0 = qtgui.time_sink_f(
-            10, #size
+            2048, #size
             samp_rate, #samp_rate
             "", #name
             1, #number of inputs
@@ -129,16 +130,18 @@ class packet_detector_test(gr.top_block, Qt.QWidget):
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.pyqwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_time_sink_x_0_win)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
-        self.blocks_null_sink_0 = blocks.null_sink(gr.sizeof_float*1)
-        self.analog_sig_source_x_0 = analog.sig_source_f(samp_rate, analog.GR_SQR_WAVE, 0.5, 1, 0, 0)
+        self.blocks_message_debug_0 = blocks.message_debug(True)
+        self.analog_sig_source_x_0 = analog.sig_source_f(samp_rate, analog.GR_SQR_WAVE, samp_rate/4, 1, 0, 0)
+        self.amr_packet_detector_0 = amr.packet_detector(samp_rate)
 
 
 
         ##################################################
         # Connections
         ##################################################
+        self.msg_connect((self.amr_packet_detector_0, 'pdu'), (self.blocks_message_debug_0, 'print'))
         self.connect((self.analog_sig_source_x_0, 0), (self.blocks_throttle_0, 0))
-        self.connect((self.blocks_throttle_0, 0), (self.blocks_null_sink_0, 0))
+        self.connect((self.blocks_throttle_0, 0), (self.amr_packet_detector_0, 0))
         self.connect((self.blocks_throttle_0, 0), (self.qtgui_time_sink_x_0, 0))
 
 
@@ -156,6 +159,7 @@ class packet_detector_test(gr.top_block, Qt.QWidget):
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
         self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
+        self.analog_sig_source_x_0.set_frequency(self.samp_rate/4)
         self.blocks_throttle_0.set_sample_rate(self.samp_rate)
         self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
 
