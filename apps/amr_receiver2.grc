@@ -11,7 +11,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: amr_receiver
+    id: amr_receiver2
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -36,7 +36,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '4'
+    value: '2'
   states:
     bus_sink: false
     bus_source: false
@@ -56,11 +56,53 @@ blocks:
     coordinate: [184, 12.0]
     rotation: 0
     state: enabled
+- name: mag_trigger_level
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: '[0,1,1,1]'
+    label: Mag Trigger Level
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '-60'
+    step: '1'
+    stop: '0'
+    value: '-15'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [736, 12.0]
+    rotation: 0
+    state: true
+- name: phase_trigger_level
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: '[1,1,1,1]'
+    label: Phase Trigger Level
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.01'
+    stop: '1'
+    value: '0.2'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [896, 12.0]
+    rotation: 0
+    state: true
 - name: samp_rate
   id: variable
   parameters:
     comment: ''
-    value: 200e3
+    value: 100e3
   states:
     bus_sink: false
     bus_source: false
@@ -72,7 +114,7 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: ''
+    gui_hint: '[1,0,1,1]'
     label: Center Frequency (kHz)
     min_len: '200'
     orient: QtCore.Qt.Horizontal
@@ -86,14 +128,14 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [392, 12.0]
+    coordinate: [552, 12.0]
     rotation: 0
     state: true
 - name: variable_qtgui_Gain
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: ''
+    gui_hint: '[0,0,1,1]'
     label: Gain
     min_len: '200'
     orient: QtCore.Qt.Horizontal
@@ -107,76 +149,28 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 316.0]
+    coordinate: [400, 12.0]
     rotation: 0
     state: true
-- name: variable_trigger_level
-  id: variable_qtgui_range
-  parameters:
-    comment: ''
-    gui_hint: ''
-    label: Trigger Level
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: '-80'
-    step: '1'
-    stop: '20'
-    value: '-17'
-    widget: counter_slider
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [576, 12.0]
-    rotation: 0
-    state: true
-- name: amr_packet_detector_0
-  id: amr_packet_detector
+- name: amr_rx_heir_0
+  id: amr_rx_heir
   parameters:
     affinity: ''
     alias: ''
+    center_freq: center_freq
     comment: ''
+    mag_trigger_level: '-15'
     maxoutbuf: '0'
     minoutbuf: '0'
-    sample_rate: samp_rate
+    period: '0.0125'
+    samp_rate: samp_rate
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1176, 172.0]
+    coordinate: [488, 256.0]
     rotation: 0
     state: true
-- name: blocks_complex_to_mag_0
-  id: blocks_complex_to_mag
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [648, 176.0]
-    rotation: 0
-    state: enabled
-- name: blocks_message_debug_0
-  id: blocks_message_debug
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    en_uvec: 'True'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1184, 272.0]
-    rotation: 0
-    state: disabled
 - name: blocks_multiply_const_vxx_0
   id: blocks_multiply_const_vxx
   parameters:
@@ -192,94 +186,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [552, 284.0]
+    coordinate: [288, 284.0]
     rotation: 0
     state: enabled
-- name: blocks_nlog10_ff_0
-  id: blocks_nlog10_ff
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    k: '0'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    n: '20'
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [872, 172.0]
-    rotation: 0
-    state: enabled
-- name: blocks_threshold_ff_0
-  id: blocks_threshold_ff
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    high: variable_trigger_level
-    init: '0'
-    low: variable_trigger_level-2.0
-    maxoutbuf: '0'
-    minoutbuf: '0'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1008, 156.0]
-    rotation: 0
-    state: enabled
-- name: fft_filter_xxx_0
-  id: fft_filter_xxx
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    decim: '1'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    nthreads: '1'
-    samp_delay: '0'
-    taps: '[-1.32218580e-03+0.00000000e+00j,-7.69165817e-04-1.13774280e-03j, 4.70769845e-04-1.40938578e-03j,
-      1.45596554e-03-6.07222859e-04j, 1.43932680e-03+6.51552628e-04j, 4.54243736e-04+1.38988501e-03j,-6.88762261e-04+1.03642492e-03j,-1.02692028e-03-9.36586647e-05j,-2.33724984e-04-1.00954137e-03j,
-      1.06157602e-03-8.30543590e-04j, 1.73035887e-03+4.57077541e-04j, 1.06213804e-03+1.91303497e-03j,-5.96231096e-04+2.36029493e-03j,-2.05219301e-03+1.36242280e-03j,-2.21861069e-03-3.59687047e-04j,-1.03895412e-03-1.47611117e-03j,
-      4.18726998e-04-1.15497672e-03j, 8.36788075e-04+1.98192844e-04j,-2.10610604e-04+1.23722543e-03j,-1.83075585e-03+8.10663236e-04j,-2.51321844e-03-1.00764763e-03j,-1.40882521e-03-2.89545488e-03j,
-      8.92553091e-04-3.33731076e-03j, 2.77918097e-03-1.89880747e-03j, 2.92302465e-03+3.62798096e-04j,
-      1.39564324e-03+1.73533941e-03j,-3.59490096e-04+1.27184419e-03j,-7.16731803e-04-3.85542794e-04j,
-      7.38267059e-04-1.49577062e-03j, 2.77481686e-03-6.67484748e-04j, 3.45426380e-03+1.90210175e-03j,
-      1.73134007e-03+4.44608978e-03j,-1.57337859e-03+4.96917784e-03j,-4.28467597e-03+2.88929715e-03j,-4.55991569e-03-3.63942883e-04j,-2.44600733e-03-2.38632865e-03j,
-      1.64928756e-05-1.75971039e-03j, 3.89346582e-04+6.27596593e-04j,-2.03082307e-03+2.11204679e-03j,-5.32324505e-03+4.24726467e-04j,-6.25881875e-03-4.16569024e-03j,-2.99854987e-03-8.63979857e-03j,
-      3.01045726e-03-9.44930274e-03j, 7.78286001e-03-5.58336909e-03j, 7.96186700e-03+1.56468553e-04j,
-      3.93161125e-03+3.15032311e-03j,-3.20525468e-06+9.64784294e-04j, 9.30782071e-04-3.98761294e-03j,
-      7.44555543e-03-5.87250197e-03j, 1.46365764e-02-3.81840642e-04j, 1.54486273e-02+1.07720365e-02j,
-      6.88600235e-03+2.01480276e-02j,-6.34411402e-03+2.03385407e-02j,-1.47154144e-02+1.08790185e-02j,-1.19309075e-02+2.90007995e-05j,-1.66908389e-03-1.34604348e-03j,
-      3.56951908e-03+1.01905352e-02j,-7.76689808e-03+2.50976789e-02j,-3.48175601e-02+2.58663689e-02j,-6.09595053e-02+5.08625191e-04j,-6.32023902e-02-4.52982575e-02j,-2.89958991e-02-8.78167665e-02j,
-      3.18128552e-02-9.89654395e-02j, 8.98939539e-02-6.55263475e-02j, 1.13740378e-01+0.00000000e+00j,
-      8.98939539e-02+6.55263475e-02j, 3.18128552e-02+9.89654395e-02j,-2.89958991e-02+8.78167665e-02j,-6.32023902e-02+4.52982575e-02j,-6.09595053e-02-5.08625191e-04j,-3.48175601e-02-2.58663689e-02j,-7.76689808e-03-2.50976789e-02j,
-      3.56951908e-03-1.01905352e-02j,-1.66908389e-03+1.34604348e-03j,-1.19309075e-02-2.90007995e-05j,-1.47154144e-02-1.08790185e-02j,-6.34411402e-03-2.03385407e-02j,
-      6.88600235e-03-2.01480276e-02j, 1.54486273e-02-1.07720365e-02j, 1.46365764e-02+3.81840642e-04j,
-      7.44555543e-03+5.87250197e-03j, 9.30782071e-04+3.98761294e-03j,-3.20525468e-06-9.64784294e-04j,
-      3.93161125e-03-3.15032311e-03j, 7.96186700e-03-1.56468553e-04j, 7.78286001e-03+5.58336909e-03j,
-      3.01045726e-03+9.44930274e-03j,-2.99854987e-03+8.63979857e-03j,-6.25881875e-03+4.16569024e-03j,-5.32324505e-03-4.24726467e-04j,-2.03082307e-03-2.11204679e-03j,
-      3.89346582e-04-6.27596593e-04j, 1.64928756e-05+1.75971039e-03j,-2.44600733e-03+2.38632865e-03j,-4.55991569e-03+3.63942883e-04j,-4.28467597e-03-2.88929715e-03j,-1.57337859e-03-4.96917784e-03j,
-      1.73134007e-03-4.44608978e-03j, 3.45426380e-03-1.90210175e-03j, 2.77481686e-03+6.67484748e-04j,
-      7.38267059e-04+1.49577062e-03j,-7.16731803e-04+3.85542794e-04j,-3.59490096e-04-1.27184419e-03j,
-      1.39564324e-03-1.73533941e-03j, 2.92302465e-03-3.62798096e-04j, 2.77918097e-03+1.89880747e-03j,
-      8.92553091e-04+3.33731076e-03j,-1.40882521e-03+2.89545488e-03j,-2.51321844e-03+1.00764763e-03j,-1.83075585e-03-8.10663236e-04j,-2.10610604e-04-1.23722543e-03j,
-      8.36788075e-04-1.98192844e-04j, 4.18726998e-04+1.15497672e-03j,-1.03895412e-03+1.47611117e-03j,-2.21861069e-03+3.59687047e-04j,-2.05219301e-03-1.36242280e-03j,-5.96231096e-04-2.36029493e-03j,
-      1.06213804e-03-1.91303497e-03j, 1.73035887e-03-4.57077541e-04j, 1.06157602e-03+8.30543590e-04j,-2.33724984e-04+1.00954137e-03j,-1.02692028e-03+9.36586647e-05j,-6.88762261e-04-1.03642492e-03j,
-      4.54243736e-04-1.38988501e-03j, 1.43932680e-03-6.51552628e-04j, 1.45596554e-03+6.07222859e-04j,
-      4.70769845e-04+1.40938578e-03j,-7.69165817e-04+1.13774280e-03j]'
-    type: ccc
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [320, 268.0]
-    rotation: 0
-    state: true
 - name: import_0
   id: import
   parameters:
@@ -299,7 +208,7 @@ blocks:
     alias: ''
     comment: '908.122
 
-      908.10'
+      907.037'
     note: ''
   states:
     bus_sink: false
@@ -308,87 +217,6 @@ blocks:
     coordinate: [304, 60.0]
     rotation: 0
     state: true
-- name: qtgui_freq_sink_x_0
-  id: qtgui_freq_sink_x
-  parameters:
-    affinity: ''
-    alias: ''
-    alpha1: '1.0'
-    alpha10: '1.0'
-    alpha2: '1.0'
-    alpha3: '1.0'
-    alpha4: '1.0'
-    alpha5: '1.0'
-    alpha6: '1.0'
-    alpha7: '1.0'
-    alpha8: '1.0'
-    alpha9: '1.0'
-    autoscale: 'False'
-    average: '1.0'
-    axislabels: 'False'
-    bw: samp_rate
-    color1: '"blue"'
-    color10: '"dark blue"'
-    color2: '"red"'
-    color3: '"green"'
-    color4: '"black"'
-    color5: '"cyan"'
-    color6: '"magenta"'
-    color7: '"yellow"'
-    color8: '"dark red"'
-    color9: '"dark green"'
-    comment: ''
-    ctrlpanel: 'True'
-    fc: center_freq*0.
-    fftsize: '2048'
-    freqhalf: 'True'
-    grid: 'True'
-    gui_hint: ''
-    label: Relative Gain
-    label1: ''
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    legend: 'False'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    name: '""'
-    nconnections: '1'
-    norm_window: 'False'
-    showports: 'True'
-    tr_chan: '0'
-    tr_level: '0.0'
-    tr_mode: qtgui.TRIG_MODE_FREE
-    tr_tag: '""'
-    type: complex
-    units: dB
-    update_time: '0.02'
-    width1: '1'
-    width10: '1'
-    width2: '1'
-    width3: '1'
-    width4: '1'
-    width5: '1'
-    width6: '1'
-    width7: '1'
-    width8: '1'
-    width9: '1'
-    wintype: window.WIN_BLACKMAN_hARRIS
-    ymax: '-50'
-    ymin: '-120'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [320, 152.0]
-    rotation: 0
-    state: enabled
 - name: qtgui_time_sink_x_0
   id: qtgui_time_sink_x
   parameters:
@@ -431,7 +259,7 @@ blocks:
     label7: Signal 7
     label8: Signal 8
     label9: Signal 9
-    legend: 'True'
+    legend: 'False'
     marker1: '-1'
     marker10: '-1'
     marker2: '-1'
@@ -459,7 +287,7 @@ blocks:
     style9: '1'
     tr_chan: '0'
     tr_delay: '0'
-    tr_level: variable_trigger_level
+    tr_level: mag_trigger_level
     tr_mode: qtgui.TRIG_MODE_NORM
     tr_slope: qtgui.TRIG_SLOPE_POS
     tr_tag: '""'
@@ -476,17 +304,17 @@ blocks:
     width8: '1'
     width9: '1'
     ylabel: Amplitude
-    ymax: '20'
-    ymin: '-50'
+    ymax: '0'
+    ymin: '-60'
     yunit: '""'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1008, 68.0]
+    coordinate: [736, 268.0]
     rotation: 0
-    state: disabled
-- name: qtgui_time_sink_x_0_0
+    state: enabled
+- name: qtgui_time_sink_x_0_1_0
   id: qtgui_time_sink_x
   parameters:
     affinity: ''
@@ -528,7 +356,7 @@ blocks:
     label7: Signal 7
     label8: Signal 8
     label9: Signal 9
-    legend: 'True'
+    legend: 'False'
     marker1: '-1'
     marker10: '-1'
     marker2: '-1'
@@ -539,7 +367,7 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: '"Bits"'
+    name: '""'
     nconnections: '1'
     size: '3000'
     srate: samp_rate
@@ -557,7 +385,7 @@ blocks:
     tr_chan: '0'
     tr_delay: '0'
     tr_level: '0.5'
-    tr_mode: qtgui.TRIG_MODE_NORM
+    tr_mode: qtgui.TRIG_MODE_AUTO
     tr_slope: qtgui.TRIG_SLOPE_POS
     tr_tag: '""'
     type: float
@@ -573,17 +401,17 @@ blocks:
     width8: '1'
     width9: '1'
     ylabel: Amplitude
-    ymax: '1.5'
-    ymin: '-0.5'
+    ymax: '2'
+    ymin: '-1'
     yunit: '""'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1192, 68.0]
+    coordinate: [736, 188.0]
     rotation: 0
     state: enabled
-- name: qtgui_time_sink_x_0_1
+- name: qtgui_time_sink_x_1
   id: qtgui_time_sink_x
   parameters:
     affinity: ''
@@ -598,7 +426,7 @@ blocks:
     alpha7: '1.0'
     alpha8: '1.0'
     alpha9: '1.0'
-    autoscale: 'True'
+    autoscale: 'False'
     axislabels: 'True'
     color1: blue
     color10: dark blue
@@ -625,7 +453,7 @@ blocks:
     label7: Signal 7
     label8: Signal 8
     label9: Signal 9
-    legend: 'True'
+    legend: 'False'
     marker1: '-1'
     marker10: '-1'
     marker2: '-1'
@@ -636,9 +464,9 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: '""'
+    name: '"Samples"'
     nconnections: '1'
-    size: '3000'
+    size: '1024'
     srate: samp_rate
     stemplot: 'False'
     style1: '1'
@@ -653,11 +481,11 @@ blocks:
     style9: '1'
     tr_chan: '0'
     tr_delay: '0'
-    tr_level: 10.0**(variable_trigger_level/20.0)
-    tr_mode: qtgui.TRIG_MODE_NORM
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
     tr_slope: qtgui.TRIG_SLOPE_POS
     tr_tag: '""'
-    type: float
+    type: msg_float
     update_time: '0.10'
     width1: '1'
     width10: '1'
@@ -670,75 +498,14 @@ blocks:
     width8: '1'
     width9: '1'
     ylabel: Amplitude
-    ymax: '1'
-    ymin: '-1'
+    ymax: '3'
+    ymin: '-3'
     yunit: '""'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [832, 68.0]
-    rotation: 0
-    state: disabled
-- name: qtgui_waterfall_sink_x_0
-  id: qtgui_waterfall_sink_x
-  parameters:
-    affinity: ''
-    alias: ''
-    alpha1: '1.0'
-    alpha10: '1.0'
-    alpha2: '1.0'
-    alpha3: '1.0'
-    alpha4: '1.0'
-    alpha5: '1.0'
-    alpha6: '1.0'
-    alpha7: '1.0'
-    alpha8: '1.0'
-    alpha9: '1.0'
-    axislabels: 'True'
-    bw: samp_rate
-    color1: '0'
-    color10: '0'
-    color2: '0'
-    color3: '0'
-    color4: '0'
-    color5: '0'
-    color6: '0'
-    color7: '0'
-    color8: '0'
-    color9: '0'
-    comment: ''
-    fc: center_freq*0
-    fftsize: '256'
-    freqhalf: 'True'
-    grid: 'True'
-    gui_hint: ''
-    int_max: '-10'
-    int_min: '-90'
-    label1: ''
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    legend: 'True'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    name: '""'
-    nconnections: '1'
-    showports: 'True'
-    type: complex
-    update_time: '0.01'
-    wintype: window.WIN_BLACKMAN_hARRIS
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [320, 368.0]
+    coordinate: [736, 348.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_1
@@ -810,7 +577,7 @@ blocks:
     bw7: '0'
     bw8: '0'
     bw9: '0'
-    center_freq0: uhd.tune_request(center_freq, samp_rate)
+    center_freq0: uhd.tune_request(center_freq, 50000.0)
     center_freq1: '0'
     center_freq10: '0'
     center_freq11: '0'
@@ -1111,7 +878,7 @@ blocks:
     lo_source8: internal
     lo_source9: internal
     maxoutbuf: '0'
-    minoutbuf: '0'
+    minoutbuf: '1000'
     nchan: '1'
     num_mboards: '1'
     otw: ''
@@ -1179,18 +946,11 @@ blocks:
     state: true
 
 connections:
-- [amr_packet_detector_0, pdu, blocks_message_debug_0, print]
-- [blocks_complex_to_mag_0, '0', blocks_nlog10_ff_0, '0']
-- [blocks_complex_to_mag_0, '0', qtgui_time_sink_x_0_1, '0']
-- [blocks_multiply_const_vxx_0, '0', blocks_complex_to_mag_0, '0']
-- [blocks_nlog10_ff_0, '0', blocks_threshold_ff_0, '0']
-- [blocks_nlog10_ff_0, '0', qtgui_time_sink_x_0, '0']
-- [blocks_threshold_ff_0, '0', amr_packet_detector_0, '0']
-- [blocks_threshold_ff_0, '0', qtgui_time_sink_x_0_0, '0']
-- [fft_filter_xxx_0, '0', blocks_multiply_const_vxx_0, '0']
-- [uhd_usrp_source_1, '0', fft_filter_xxx_0, '0']
-- [uhd_usrp_source_1, '0', qtgui_freq_sink_x_0, '0']
-- [uhd_usrp_source_1, '0', qtgui_waterfall_sink_x_0, '0']
+- [amr_rx_heir_0, '0', qtgui_time_sink_x_0_1_0, '0']
+- [amr_rx_heir_0, '1', qtgui_time_sink_x_0, '0']
+- [amr_rx_heir_0, out, qtgui_time_sink_x_1, in]
+- [blocks_multiply_const_vxx_0, '0', amr_rx_heir_0, '0']
+- [uhd_usrp_source_1, '0', blocks_multiply_const_vxx_0, '0']
 
 metadata:
   file_format: 1

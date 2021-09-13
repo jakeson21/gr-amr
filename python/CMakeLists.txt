@@ -23,7 +23,8 @@ message(STATUS "GR_PYTHON_DIR = ${GR_PYTHON_DIR}")
 GR_PYTHON_INSTALL(
     FILES
     __init__.py
-    packet_detector.py DESTINATION ${GR_PYTHON_DIR}/amr
+    packet_detector.py
+    fsk_demod_ff.py DESTINATION ${GR_PYTHON_DIR}/amr
 )
 
 ########################################################################
@@ -33,3 +34,4 @@ include(GrTest)
 
 set(GR_TEST_TARGET_DEPS gnuradio-amr)
 GR_ADD_TEST(qa_packet_detector ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_packet_detector.py)
+GR_ADD_TEST(qa_fsk_demod_ff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_fsk_demod_ff.py)
