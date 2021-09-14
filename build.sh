@@ -1,4 +1,4 @@
-mkdir -f build
+#mkdir -f build
 cd build
-cmake .. -DCMAKE_INSTALL_ && make
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr && make
 sudo make install

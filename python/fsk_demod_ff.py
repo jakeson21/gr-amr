@@ -11,7 +11,6 @@ import numpy as np
 from gnuradio import gr
 import pmt
 import pdb
-import matplotlib.pyplot as plt
 
 class fsk_demod_ff(gr.sync_block):
     """
@@ -31,6 +30,10 @@ class fsk_demod_ff(gr.sync_block):
         self._samp_buffer = np.zeros((self._samps_to_collect,), dtype=np.float32)
         self._samps_collected = 0
         self._state = 0 # 0=searching, 1=collecting
+        # Packet length + tone + sync = ~12 ms
+        # tone ~ 8.2 ms
+        # sync ~ 
+        # Bitrate ~ 9600 bps, assuming sync of 101010... Not manchester encoded
 
 
     def work(self, input_items, output_items):

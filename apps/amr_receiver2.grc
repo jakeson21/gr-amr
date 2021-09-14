@@ -110,6 +110,18 @@ blocks:
     coordinate: [48, 76.0]
     rotation: 0
     state: enabled
+- name: samp_rate_2
+  id: variable
+  parameters:
+    comment: ''
+    value: 100e3*24/25
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [496, 188.0]
+    rotation: 0
+    state: enabled
 - name: variable_qtgui_Fc
   id: variable_qtgui_range
   parameters:
@@ -163,12 +175,12 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     period: '0.0125'
-    samp_rate: samp_rate
+    samp_rate: samp_rate_2
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [488, 256.0]
+    coordinate: [704, 256.0]
     rotation: 0
     state: true
 - name: blocks_multiply_const_vxx_0
@@ -217,6 +229,87 @@ blocks:
     coordinate: [304, 60.0]
     rotation: 0
     state: true
+- name: qtgui_freq_sink_x_0
+  id: qtgui_freq_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    average: '1.0'
+    axislabels: 'True'
+    bw: samp_rate_2
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    ctrlpanel: 'False'
+    fc: '0'
+    fftsize: '1024'
+    freqhalf: 'True'
+    grid: 'True'
+    gui_hint: ''
+    label: Relative Gain
+    label1: ''
+    label10: ''''''
+    label2: ''''''
+    label3: ''''''
+    label4: ''''''
+    label5: ''''''
+    label6: ''''''
+    label7: ''''''
+    label8: ''''''
+    label9: ''''''
+    legend: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '""'
+    nconnections: '1'
+    norm_window: 'False'
+    showports: 'False'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_tag: '""'
+    type: msg_float
+    units: dB
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    wintype: window.WIN_BLACKMAN_hARRIS
+    ymax: '0'
+    ymin: '-80'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [960, 428.0]
+    rotation: 0
+    state: disabled
 - name: qtgui_time_sink_x_0
   id: qtgui_time_sink_x
   parameters:
@@ -272,8 +365,8 @@ blocks:
     marker9: '-1'
     name: '""'
     nconnections: '1'
-    size: '3000'
-    srate: samp_rate
+    size: '300'
+    srate: samp_rate_2
     stemplot: 'False'
     style1: '1'
     style10: '1'
@@ -311,9 +404,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [736, 268.0]
+    coordinate: [960, 268.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0_1_0
   id: qtgui_time_sink_x
   parameters:
@@ -369,8 +462,8 @@ blocks:
     marker9: '-1'
     name: '""'
     nconnections: '1'
-    size: '3000'
-    srate: samp_rate
+    size: '300'
+    srate: samp_rate_2
     stemplot: 'False'
     style1: '1'
     style10: '1'
@@ -408,9 +501,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [736, 188.0]
+    coordinate: [960, 188.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_1
   id: qtgui_time_sink_x
   parameters:
@@ -467,7 +560,7 @@ blocks:
     name: '"Samples"'
     nconnections: '1'
     size: '1024'
-    srate: samp_rate
+    srate: samp_rate_2
     stemplot: 'False'
     style1: '1'
     style10: '1'
@@ -505,7 +598,42 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [736, 348.0]
+    coordinate: [960, 348.0]
+    rotation: 0
+    state: enabled
+- name: rational_resampler_xxx_0
+  id: rational_resampler_xxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    decim: '25'
+    fbw: '0'
+    interp: '24'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    taps: '[]'
+    type: ccc
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [480, 260.0]
+    rotation: 0
+    state: true
+- name: tools_print_float_0
+  id: tools_print_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    enabled: 'True'
+    variable_name: '''samples'''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [960, 500.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_1
@@ -948,8 +1076,11 @@ blocks:
 connections:
 - [amr_rx_heir_0, '0', qtgui_time_sink_x_0_1_0, '0']
 - [amr_rx_heir_0, '1', qtgui_time_sink_x_0, '0']
+- [amr_rx_heir_0, out, qtgui_freq_sink_x_0, in]
 - [amr_rx_heir_0, out, qtgui_time_sink_x_1, in]
-- [blocks_multiply_const_vxx_0, '0', amr_rx_heir_0, '0']
+- [amr_rx_heir_0, out, tools_print_float_0, msg]
+- [blocks_multiply_const_vxx_0, '0', rational_resampler_xxx_0, '0']
+- [rational_resampler_xxx_0, '0', amr_rx_heir_0, '0']
 - [uhd_usrp_source_1, '0', blocks_multiply_const_vxx_0, '0']
 
 metadata:

@@ -172,3 +172,5 @@ endif(ENABLE_PYTHON)
 install(FILES cmake/Modules/amrConfig.cmake
     DESTINATION ${CMAKE_MODULES_DIR}/amr
 )
+
+message(INFO "CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX}")
