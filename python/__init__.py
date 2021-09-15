@@ -22,4 +22,5 @@ except ModuleNotFoundError:
 # import any pure python here
 from .packet_detector import packet_detector
 from .fsk_demod_ff import fsk_demod_ff
+from .symbols_to_bits import symbols_to_bits
 #

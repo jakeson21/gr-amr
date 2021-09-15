@@ -24,7 +24,8 @@ GR_PYTHON_INSTALL(
     FILES
     __init__.py
     packet_detector.py
-    fsk_demod_ff.py DESTINATION ${GR_PYTHON_DIR}/amr
+    fsk_demod_ff.py
+    symbols_to_bits.py DESTINATION ${GR_PYTHON_DIR}/amr
 )
 
 ########################################################################

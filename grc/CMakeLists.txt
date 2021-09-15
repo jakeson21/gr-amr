@@ -8,5 +8,6 @@
 
 install(FILES
     amr_packet_detector.block.yml
-    amr_fsk_demod_ff.block.yml DESTINATION share/gnuradio/grc/blocks
+    amr_fsk_demod_ff.block.yml
+    amr_symbols_to_bits.block.yml DESTINATION share/gnuradio/grc/blocks
 )

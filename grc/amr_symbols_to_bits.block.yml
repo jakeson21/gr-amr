@@ -1,10 +1,10 @@
-id: amr_fsk_demod_ff
-label: FSK Demod
+id: amr_symbols_to_bits
+label: Symbols to Bits
 category: '[AMR]'
 
 templates:
   imports: import amr
-  make: amr.fsk_demod_ff(${center_freq}, ${samp_rate}, ${period})
+  make: amr.symbols_to_bits(${samps_per_bit}, ${threshold})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -12,16 +12,12 @@ templates:
 #     * label (label shown in the GUI)
 #     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
 parameters:
-- id: center_freq
-  label: 'Center Frequency Hz'
+- id: samps_per_bit
+  label: Samples per Bit
   dtype: float
 
-- id: samp_rate
-  label: 'Sample Rate Hz'
-  dtype: float
-
-- id: period
-  label: 'Packet Duration sec'
+- id: threshold
+  label: Hysteresis Threshold
   dtype: float
 
 #  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
@@ -32,18 +28,12 @@ parameters:
 #      * vlen (optional - data stream vector length. Default is 1)
 #      * optional (optional - set to 1 for optional inputs. Default is 0)
 inputs:
-- label: 'phase'
-  domain: stream
-  dtype: float
-  optional: 0
-
-- label: 'bool'
-  domain: stream
-  dtype: float
-  optional: 0
+- label: msg
+  domain: message
+  dtype: byte
 
 outputs:
-- label: pdu
+- label: bits
   domain: message
   dtype: byte
   optional: True

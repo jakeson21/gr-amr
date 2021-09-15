@@ -10,7 +10,6 @@
 import numpy as np
 from gnuradio import gr
 import pmt
-import pdb
 
 class fsk_demod_ff(gr.sync_block):
     """
@@ -20,8 +19,7 @@ class fsk_demod_ff(gr.sync_block):
         gr.sync_block.__init__(self,
             name="fsk_demod_ff",
             in_sig=[np.float32, np.float32],
-            out_sig=None
-            )
+            out_sig=None)
         self.message_port_register_out(pmt.intern('pdu'))
         self.set_output_multiple(2)
         self._center_freq = center_freq

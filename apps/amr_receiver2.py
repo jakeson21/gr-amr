@@ -136,12 +136,61 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
         self.uhd_usrp_source_1.set_auto_dc_offset(True, 0)
         self.uhd_usrp_source_1.set_auto_iq_balance(True, 0)
         self.uhd_usrp_source_1.set_min_output_buffer(1000)
-        self.tools_print_float_0 = tools.print_float('samples', True)
+        self.tools_print_float_0 = tools.print_float('bits', True)
         self.rational_resampler_xxx_0 = filter.rational_resampler_ccc(
                 interpolation=24,
                 decimation=25,
                 taps=[],
                 fractional_bw=0)
+        self.qtgui_time_sink_x_1_0 = qtgui.time_sink_f(
+            1024, #size
+            9600, #samp_rate
+            "Samples", #name
+            0, #number of inputs
+            None # parent
+        )
+        self.qtgui_time_sink_x_1_0.set_update_time(0.10)
+        self.qtgui_time_sink_x_1_0.set_y_axis(-0.5, 1.5)
+
+        self.qtgui_time_sink_x_1_0.set_y_label('Amplitude', "")
+
+        self.qtgui_time_sink_x_1_0.enable_tags(True)
+        self.qtgui_time_sink_x_1_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
+        self.qtgui_time_sink_x_1_0.enable_autoscale(False)
+        self.qtgui_time_sink_x_1_0.enable_grid(True)
+        self.qtgui_time_sink_x_1_0.enable_axis_labels(True)
+        self.qtgui_time_sink_x_1_0.enable_control_panel(False)
+        self.qtgui_time_sink_x_1_0.enable_stem_plot(False)
+
+        self.qtgui_time_sink_x_1_0.disable_legend()
+
+        labels = ['Signal 1', 'Signal 2', 'Signal 3', 'Signal 4', 'Signal 5',
+            'Signal 6', 'Signal 7', 'Signal 8', 'Signal 9', 'Signal 10']
+        widths = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+        colors = ['blue', 'red', 'green', 'black', 'cyan',
+            'magenta', 'yellow', 'dark red', 'dark green', 'dark blue']
+        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0]
+        styles = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+        markers = [-1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1]
+
+
+        for i in range(1):
+            if len(labels[i]) == 0:
+                self.qtgui_time_sink_x_1_0.set_line_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_time_sink_x_1_0.set_line_label(i, labels[i])
+            self.qtgui_time_sink_x_1_0.set_line_width(i, widths[i])
+            self.qtgui_time_sink_x_1_0.set_line_color(i, colors[i])
+            self.qtgui_time_sink_x_1_0.set_line_style(i, styles[i])
+            self.qtgui_time_sink_x_1_0.set_line_marker(i, markers[i])
+            self.qtgui_time_sink_x_1_0.set_line_alpha(i, alphas[i])
+
+        self._qtgui_time_sink_x_1_0_win = sip.wrapinstance(self.qtgui_time_sink_x_1_0.pyqwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._qtgui_time_sink_x_1_0_win)
         self.qtgui_time_sink_x_1 = qtgui.time_sink_f(
             1024, #size
             samp_rate_2, #samp_rate
@@ -200,6 +249,7 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(100)
         self.amr_rx_heir_0 = amr_rx_heir(
+            bits_per_second=9600,
             center_freq=center_freq,
             mag_trigger_level=-15,
             period=0.0125,
@@ -211,8 +261,9 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.msg_connect((self.amr_rx_heir_0, 'out'), (self.qtgui_time_sink_x_1, 'in'))
-        self.msg_connect((self.amr_rx_heir_0, 'out'), (self.tools_print_float_0, 'msg'))
+        self.msg_connect((self.amr_rx_heir_0, 'symbols'), (self.qtgui_time_sink_x_1, 'in'))
+        self.msg_connect((self.amr_rx_heir_0, 'bits'), (self.qtgui_time_sink_x_1_0, 'in'))
+        self.msg_connect((self.amr_rx_heir_0, 'bits'), (self.tools_print_float_0, 'msg'))
         self.connect((self.blocks_multiply_const_vxx_0, 0), (self.rational_resampler_xxx_0, 0))
         self.connect((self.rational_resampler_xxx_0, 0), (self.amr_rx_heir_0, 0))
         self.connect((self.uhd_usrp_source_1, 0), (self.blocks_multiply_const_vxx_0, 0))
