@@ -43,7 +43,11 @@ inputs:
   optional: 0
 
 outputs:
-- label: pdu
+- label: samps
+  domain: message
+  dtype: byte
+  optional: True
+- label: fc
   domain: message
   dtype: byte
   optional: True

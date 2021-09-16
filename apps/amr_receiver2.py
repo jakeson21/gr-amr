@@ -84,7 +84,7 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.variable_qtgui_Fc = variable_qtgui_Fc = 908.122
+        self.variable_qtgui_Fc = variable_qtgui_Fc = 905.5895
         self.variable_qtgui_Gain = variable_qtgui_Gain = 40
         self.samp_rate_2 = samp_rate_2 = 100e3*24/25
         self.samp_rate = samp_rate = 100e3
@@ -110,7 +110,7 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(1, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._variable_qtgui_Fc_range = Range(89, 930, 0.001, 908.122, 200)
+        self._variable_qtgui_Fc_range = Range(905.5895, 905.5895 + 0.3618*52, 0.3618, 905.5895, 200)
         self._variable_qtgui_Fc_win = RangeWidget(self._variable_qtgui_Fc_range, self.set_variable_qtgui_Fc, 'Center Frequency (kHz)', "counter_slider", float, QtCore.Qt.Horizontal)
         self.top_grid_layout.addWidget(self._variable_qtgui_Fc_win, 1, 0, 1, 1)
         for r in range(1, 2):
@@ -142,10 +142,44 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
                 decimation=25,
                 taps=[],
                 fractional_bw=0)
+        self.qtgui_waterfall_sink_x_0 = qtgui.waterfall_sink_c(
+            512, #size
+            window.WIN_BLACKMAN_hARRIS, #wintype
+            0, #fc
+            samp_rate, #bw
+            "", #name
+            1, #number of inputs
+            None # parent
+        )
+        self.qtgui_waterfall_sink_x_0.set_update_time(0.01)
+        self.qtgui_waterfall_sink_x_0.enable_grid(True)
+        self.qtgui_waterfall_sink_x_0.enable_axis_labels(True)
+
+
+
+        labels = ['', '', '', '', '',
+                  '', '', '', '', '']
+        colors = [0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0]
+        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
+                  1.0, 1.0, 1.0, 1.0, 1.0]
+
+        for i in range(1):
+            if len(labels[i]) == 0:
+                self.qtgui_waterfall_sink_x_0.set_line_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_waterfall_sink_x_0.set_line_label(i, labels[i])
+            self.qtgui_waterfall_sink_x_0.set_color_map(i, colors[i])
+            self.qtgui_waterfall_sink_x_0.set_line_alpha(i, alphas[i])
+
+        self.qtgui_waterfall_sink_x_0.set_intensity_range(-100, -20)
+
+        self._qtgui_waterfall_sink_x_0_win = sip.wrapinstance(self.qtgui_waterfall_sink_x_0.pyqwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._qtgui_waterfall_sink_x_0_win)
         self.qtgui_time_sink_x_1_0 = qtgui.time_sink_f(
             1024, #size
             9600, #samp_rate
-            "Samples", #name
+            "Bits", #name
             0, #number of inputs
             None # parent
         )
@@ -191,55 +225,6 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
 
         self._qtgui_time_sink_x_1_0_win = sip.wrapinstance(self.qtgui_time_sink_x_1_0.pyqwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_time_sink_x_1_0_win)
-        self.qtgui_time_sink_x_1 = qtgui.time_sink_f(
-            1024, #size
-            samp_rate_2, #samp_rate
-            "Samples", #name
-            0, #number of inputs
-            None # parent
-        )
-        self.qtgui_time_sink_x_1.set_update_time(0.10)
-        self.qtgui_time_sink_x_1.set_y_axis(-3, 3)
-
-        self.qtgui_time_sink_x_1.set_y_label('Amplitude', "")
-
-        self.qtgui_time_sink_x_1.enable_tags(True)
-        self.qtgui_time_sink_x_1.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
-        self.qtgui_time_sink_x_1.enable_autoscale(False)
-        self.qtgui_time_sink_x_1.enable_grid(True)
-        self.qtgui_time_sink_x_1.enable_axis_labels(True)
-        self.qtgui_time_sink_x_1.enable_control_panel(False)
-        self.qtgui_time_sink_x_1.enable_stem_plot(False)
-
-        self.qtgui_time_sink_x_1.disable_legend()
-
-        labels = ['Signal 1', 'Signal 2', 'Signal 3', 'Signal 4', 'Signal 5',
-            'Signal 6', 'Signal 7', 'Signal 8', 'Signal 9', 'Signal 10']
-        widths = [1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1]
-        colors = ['blue', 'red', 'green', 'black', 'cyan',
-            'magenta', 'yellow', 'dark red', 'dark green', 'dark blue']
-        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
-            1.0, 1.0, 1.0, 1.0, 1.0]
-        styles = [1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1]
-        markers = [-1, -1, -1, -1, -1,
-            -1, -1, -1, -1, -1]
-
-
-        for i in range(1):
-            if len(labels[i]) == 0:
-                self.qtgui_time_sink_x_1.set_line_label(i, "Data {0}".format(i))
-            else:
-                self.qtgui_time_sink_x_1.set_line_label(i, labels[i])
-            self.qtgui_time_sink_x_1.set_line_width(i, widths[i])
-            self.qtgui_time_sink_x_1.set_line_color(i, colors[i])
-            self.qtgui_time_sink_x_1.set_line_style(i, styles[i])
-            self.qtgui_time_sink_x_1.set_line_marker(i, markers[i])
-            self.qtgui_time_sink_x_1.set_line_alpha(i, alphas[i])
-
-        self._qtgui_time_sink_x_1_win = sip.wrapinstance(self.qtgui_time_sink_x_1.pyqwidget(), Qt.QWidget)
-        self.top_layout.addWidget(self._qtgui_time_sink_x_1_win)
         self._phase_trigger_level_range = Range(0, 1, 0.01, 0.2, 200)
         self._phase_trigger_level_win = RangeWidget(self._phase_trigger_level_range, self.set_phase_trigger_level, 'Phase Trigger Level', "counter_slider", float, QtCore.Qt.Horizontal)
         self.top_grid_layout.addWidget(self._phase_trigger_level_win, 1, 1, 1, 1)
@@ -261,9 +246,9 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.msg_connect((self.amr_rx_heir_0, 'symbols'), (self.qtgui_time_sink_x_1, 'in'))
         self.msg_connect((self.amr_rx_heir_0, 'bits'), (self.qtgui_time_sink_x_1_0, 'in'))
         self.msg_connect((self.amr_rx_heir_0, 'bits'), (self.tools_print_float_0, 'msg'))
+        self.connect((self.blocks_multiply_const_vxx_0, 0), (self.qtgui_waterfall_sink_x_0, 0))
         self.connect((self.blocks_multiply_const_vxx_0, 0), (self.rational_resampler_xxx_0, 0))
         self.connect((self.rational_resampler_xxx_0, 0), (self.amr_rx_heir_0, 0))
         self.connect((self.uhd_usrp_source_1, 0), (self.blocks_multiply_const_vxx_0, 0))
@@ -297,13 +282,13 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
     def set_samp_rate_2(self, samp_rate_2):
         self.samp_rate_2 = samp_rate_2
         self.amr_rx_heir_0.set_samp_rate(self.samp_rate_2)
-        self.qtgui_time_sink_x_1.set_samp_rate(self.samp_rate_2)
 
     def get_samp_rate(self):
         return self.samp_rate
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
+        self.qtgui_waterfall_sink_x_0.set_frequency_range(0, self.samp_rate)
         self.uhd_usrp_source_1.set_samp_rate(self.samp_rate)
         self.uhd_usrp_source_1.set_bandwidth(self.samp_rate*self.N, 0)
 

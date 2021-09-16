@@ -21,8 +21,8 @@ class symbols_to_bits(gr.sync_block):
             name="symbols_to_bits",
             in_sig=[],
             out_sig=None)
-        self.message_port_register_in(pmt.intern("msg"))
-        self.set_msg_handler(pmt.intern("msg"), self.handle_msg)
+        self.message_port_register_in(pmt.intern("in"))
+        self.set_msg_handler(pmt.intern("in"), self.handle_msg)
         self.message_port_register_out(pmt.intern('bits'))
         self._spb = samps_per_bit
         self._b = np.ones((int(np.floor(self._spb/2)*2),))
@@ -53,22 +53,24 @@ class symbols_to_bits(gr.sync_block):
 
 
     def handle_msg(self, msg):
-        name = pmt.pmt_python.pmt_base()
+        # name = pmt.pmt_python.pmt_base()
         samples = pmt.pmt_python.pmt_base()
-        if pmt.is_pair(msg):
-            name = pmt.car(msg)
+        if pmt.is_dict(msg):
+            samples = pmt.dict_ref(msg, pmt.intern("samples"), pmt.PMT_NIL)
+        elif pmt.is_pair(msg):
+            # name = pmt.car(msg)
             samples = pmt.cdr(msg)
-            # if pmt.symbol_to_string(name) != self.variable_name:
-            #     print('variable_name {} doesnt match {}'.format(self.variable_name, pmt.symbol_to_string(name)))
-            #     return
         elif pmt.is_uniform_vector(msg):
             samples = msg
         else:
-            print('bad data format')
+            print('Unexpected pmt data format')
             return
-        data = pmt.f32vector_elements(samples)
-        bits, index = self.demodulate(data)
-        self.message_port_pub(pmt.intern('bits'), pmt.cons(pmt.intern("bits"), pmt.init_f32vector(len(bits), bits)))
+        try:
+            data = pmt.f32vector_elements(samples)
+            bits, index = self.demodulate(data)
+            self.message_port_pub(pmt.intern('bits'), pmt.cons(pmt.intern("bits"), pmt.init_f32vector(len(bits), bits)))
+        except ValueError:
+            print('Invalid value for samples')
 
 
     def work(self, input_items, output_items):

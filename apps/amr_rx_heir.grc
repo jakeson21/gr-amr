@@ -64,7 +64,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1032, 316.0]
+    coordinate: [832, 340.0]
     rotation: 0
     state: true
 - name: bits_per_second
@@ -220,7 +220,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [936, 28.0]
+    coordinate: [928, 28.0]
     rotation: 0
     state: true
 - name: pad_sink_1
@@ -247,7 +247,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    label: symbols
+    label: samples
     num_streams: '1'
     optional: 'True'
     type: message
@@ -256,7 +256,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1096, 180.0]
+    coordinate: [1096, 196.0]
     rotation: 0
     state: true
 - name: pad_sink_2_0
@@ -274,7 +274,25 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1160, 236.0]
+    coordinate: [1128, 348.0]
+    rotation: 0
+    state: true
+- name: pad_sink_2_1
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: fc
+    num_streams: '1'
+    optional: 'True'
+    type: message
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1128, 252.0]
     rotation: 0
     state: true
 - name: pad_source_1
@@ -333,8 +351,9 @@ blocks:
     state: true
 
 connections:
-- [amr_fsk_demod_ff_0, pdu, amr_symbols_to_bits_0, msg]
-- [amr_fsk_demod_ff_0, pdu, pad_sink_2, in]
+- [amr_fsk_demod_ff_0, fc, pad_sink_2_1, in]
+- [amr_fsk_demod_ff_0, samps, amr_symbols_to_bits_0, in]
+- [amr_fsk_demod_ff_0, samps, pad_sink_2, in]
 - [amr_symbols_to_bits_0, bits, pad_sink_2_0, in]
 - [blocks_complex_to_magphase_0, '0', blocks_nlog10_ff_0, '0']
 - [blocks_complex_to_magphase_0, '1', amr_fsk_demod_ff_0, '0']
