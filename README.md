@@ -12,7 +12,8 @@ df = 0.3618 # kHz
 Signal jumps from first 5 channels in reverse order: 907.0367, 906.6749, 906.3131, 905.9513, 905.5895
 * dwell time is ~2/3 second for a repitition period of ~3.313 seconds
 
-## Protocol https://fccid.io/SDBLGZ1000/Test-Report/Test-Report-1902797
+## Protocol
+* https://fccid.io/SDBLGZ1000/Test-Report/Test-Report-1902797
 * FCC ID: SDBLGZ1000
 * https://www.youtube.com/watch?v=r4vjF4cLkVs&ab_channel=SensusGlobal
 * 2-FSK with df=20kHz, for channel bandwidth of ~50kHz
