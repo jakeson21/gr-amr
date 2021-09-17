@@ -9,6 +9,9 @@ df = 0.3618 # kHz
 905.5895 + df*np.arange(0,53)
 ```
 
+Signal jumps from first 5 channels in reverse order: 907.0367, 906.6749, 906.3131, 905.9513, 905.5895
+* dwell time is ~2/3 second for a repitition period of ~3.313 seconds
+
 ## Protocol
 * 2-FSK with df=20kHz, for channel bandwidth of ~50kHz
 * Structure: tone + sync + data = ~12.5 ms or 120 bits

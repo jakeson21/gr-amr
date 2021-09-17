@@ -184,6 +184,40 @@ blocks:
     coordinate: [688, 200.0]
     rotation: 0
     state: true
+- name: blocks_msg_meta_to_pair_0
+  id: blocks_msg_meta_to_pair
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    keyin: '''bits'''
+    keyout: '''bits'''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [696, 508.0]
+    rotation: 0
+    state: true
+- name: blocks_msg_meta_to_pair_0_0
+  id: blocks_msg_meta_to_pair
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    keyin: '''timestamp'''
+    keyout: '''time'''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [696, 572.0]
+    rotation: 0
+    state: true
 - name: blocks_multiply_const_vxx_0
   id: blocks_multiply_const_vxx
   parameters:
@@ -744,7 +778,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [960, 404.0]
+    coordinate: [960, 412.0]
     rotation: 0
     state: enabled
 - name: qtgui_waterfall_sink_x_0
@@ -835,12 +869,12 @@ blocks:
     alias: ''
     comment: ''
     enabled: 'True'
-    variable_name: '''bits'''
+    variable_name: '''time'''
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [960, 492.0]
+    coordinate: [1000, 572.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_1
@@ -1283,10 +1317,12 @@ blocks:
 connections:
 - [amr_rx_heir_0, '0', qtgui_time_sink_x_0_1_0, '0']
 - [amr_rx_heir_0, '1', qtgui_time_sink_x_0, '0']
+- [amr_rx_heir_0, bits, blocks_msg_meta_to_pair_0, inmeta]
+- [amr_rx_heir_0, bits, blocks_msg_meta_to_pair_0_0, inmeta]
 - [amr_rx_heir_0, bits, qtgui_time_raster_sink_x_0, in]
-- [amr_rx_heir_0, bits, qtgui_time_sink_x_1_0, in]
-- [amr_rx_heir_0, bits, tools_print_float_0, msg]
 - [amr_rx_heir_0, samples, qtgui_time_sink_x_1, in]
+- [blocks_msg_meta_to_pair_0, outpair, qtgui_time_sink_x_1_0, in]
+- [blocks_msg_meta_to_pair_0_0, outpair, tools_print_float_0, msg]
 - [blocks_multiply_const_vxx_0, '0', qtgui_waterfall_sink_x_0, '0']
 - [blocks_multiply_const_vxx_0, '0', rational_resampler_xxx_0, '0']
 - [rational_resampler_xxx_0, '0', amr_rx_heir_0, '0']

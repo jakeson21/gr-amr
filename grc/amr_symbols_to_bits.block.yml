@@ -4,7 +4,7 @@ category: '[AMR]'
 
 templates:
   imports: import amr
-  make: amr.symbols_to_bits(${samps_per_bit}, ${threshold})
+  make: amr.symbols_to_bits(${samps_per_bit}, ${threshold}, ${bit_rate})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -18,6 +18,10 @@ parameters:
 
 - id: threshold
   label: Hysteresis Threshold
+  dtype: float
+
+- id: bit_rate
+  label: Bit Rate
   dtype: float
 
 #  Make one 'inputs' list entry per input and one 'outputs' list entry per output.

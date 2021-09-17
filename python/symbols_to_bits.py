@@ -16,7 +16,7 @@ class symbols_to_bits(gr.sync_block):
     """
     docstring Takes messages with NRZ samples and converts to bits
     """
-    def __init__(self, samps_per_bit, threshold):
+    def __init__(self, samps_per_bit, threshold, bit_rate):
         gr.sync_block.__init__(self,
             name="symbols_to_bits",
             in_sig=[],
@@ -29,6 +29,7 @@ class symbols_to_bits(gr.sync_block):
         self._b[int(len(self._b)/2):] = -1
         self._b = self._b / len(self._b)
         self._threshold = threshold
+        self._bit_rate = bit_rate
 
 
     def demodulate(self, input):
@@ -54,21 +55,30 @@ class symbols_to_bits(gr.sync_block):
 
     def handle_msg(self, msg):
         # name = pmt.pmt_python.pmt_base()
-        samples = pmt.pmt_python.pmt_base()
-        if pmt.is_dict(msg):
-            samples = pmt.dict_ref(msg, pmt.intern("samples"), pmt.PMT_NIL)
-        elif pmt.is_pair(msg):
-            # name = pmt.car(msg)
-            samples = pmt.cdr(msg)
-        elif pmt.is_uniform_vector(msg):
-            samples = msg
+        # samples = pmt.pmt_python.pmt_base()
+        # timestamp = pmt.pmt_python.pmt_base()
+        # if pmt.is_dict(msg):
+        #     samples = pmt.dict_ref(msg, pmt.intern("samples"), pmt.PMT_NIL)
+        # elif pmt.is_pair(msg):
+        #     samples = pmt.car(msg)
+        # elif pmt.is_uniform_vector(msg):
+        #     samples = msg
+        meta = pmt.car(msg)
+        if pmt.is_dict(meta) and pmt.dict_has_key(meta, pmt.intern("samples")):
+            samples = pmt.dict_ref(meta, pmt.intern("samples"), pmt.PMT_NIL)
+            timestamp = pmt.dict_ref(meta, pmt.intern("time"), pmt.PMT_NIL)
+            timestamp = pmt.to_double(timestamp)
         else:
             print('Unexpected pmt data format')
             return
         try:
             data = pmt.f32vector_elements(samples)
             bits, index = self.demodulate(data)
-            self.message_port_pub(pmt.intern('bits'), pmt.cons(pmt.intern("bits"), pmt.init_f32vector(len(bits), bits)))
+            dt = index/(self._bit_rate * self._spb)
+            meta = pmt.make_dict()
+            meta = pmt.dict_add(meta, pmt.intern("bits"), pmt.init_f32vector(len(bits), bits))
+            meta = pmt.dict_add(meta, pmt.intern("timestamp"), pmt.from_double(timestamp + dt))
+            self.message_port_pub(pmt.intern('bits'), pmt.cons(meta, pmt.PMT_NIL))
         except ValueError:
             print('Invalid value for samples')
 

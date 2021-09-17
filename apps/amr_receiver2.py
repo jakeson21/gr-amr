@@ -136,7 +136,7 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
         self.uhd_usrp_source_1.set_auto_dc_offset(True, 0)
         self.uhd_usrp_source_1.set_auto_iq_balance(True, 0)
         self.uhd_usrp_source_1.set_min_output_buffer(1000)
-        self.tools_print_float_0 = tools.print_float('bits', True)
+        self.tools_print_float_0 = tools.print_float('time', True)
         self.rational_resampler_xxx_0 = filter.rational_resampler_ccc(
                 interpolation=24,
                 decimation=25,
@@ -233,6 +233,8 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
         for c in range(1, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_cc(100)
+        self.blocks_msg_meta_to_pair_0_0 = blocks.meta_to_pair('timestamp','time')
+        self.blocks_msg_meta_to_pair_0 = blocks.meta_to_pair('bits','bits')
         self.amr_rx_heir_0 = amr_rx_heir(
             bits_per_second=9600,
             center_freq=center_freq,
@@ -246,8 +248,10 @@ class amr_receiver2(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.msg_connect((self.amr_rx_heir_0, 'bits'), (self.qtgui_time_sink_x_1_0, 'in'))
-        self.msg_connect((self.amr_rx_heir_0, 'bits'), (self.tools_print_float_0, 'msg'))
+        self.msg_connect((self.amr_rx_heir_0, 'bits'), (self.blocks_msg_meta_to_pair_0, 'inmeta'))
+        self.msg_connect((self.amr_rx_heir_0, 'bits'), (self.blocks_msg_meta_to_pair_0_0, 'inmeta'))
+        self.msg_connect((self.blocks_msg_meta_to_pair_0, 'outpair'), (self.qtgui_time_sink_x_1_0, 'in'))
+        self.msg_connect((self.blocks_msg_meta_to_pair_0_0, 'outpair'), (self.tools_print_float_0, 'msg'))
         self.connect((self.blocks_multiply_const_vxx_0, 0), (self.qtgui_waterfall_sink_x_0, 0))
         self.connect((self.blocks_multiply_const_vxx_0, 0), (self.rational_resampler_xxx_0, 0))
         self.connect((self.rational_resampler_xxx_0, 0), (self.amr_rx_heir_0, 0))

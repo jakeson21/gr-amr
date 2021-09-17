@@ -55,6 +55,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    bit_rate: bits_per_second
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -256,7 +257,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1096, 196.0]
+    coordinate: [1112, 180.0]
     rotation: 0
     state: true
 - name: pad_sink_2_0
@@ -274,7 +275,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1128, 348.0]
+    coordinate: [1120, 356.0]
     rotation: 0
     state: true
 - name: pad_sink_2_1

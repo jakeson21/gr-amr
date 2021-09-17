@@ -29,6 +29,8 @@ class fsk_demod_ff(gr.sync_block):
         self._samp_buffer = np.zeros((self._samps_to_collect,), dtype=np.float32)
         self._samps_collected = 0
         self._state = 0 # 0=searching, 1=collecting
+        self._time = 0
+        self._detection_time = 0
         # Packet length + tone + sync = ~12 ms
         # tone ~ 8.2 ms
         # sync ~ 
@@ -49,10 +51,16 @@ class fsk_demod_ff(gr.sync_block):
                 mean_phase = (np.amax(data[:int(self._samps_to_collect/2)]) + np.amin(data[:int(self._samps_to_collect/2)])) / 2.
                 data = data - mean_phase
                 fc = self._samp_rate * (mean_phase/np.pi/2.)
-                self.message_port_pub(pmt.intern('samps'), pmt.cons(pmt.intern("samples"), pmt.init_f32vector(self._samps_to_collect, data)))
+                
+                meta = pmt.make_dict()
+                meta = pmt.dict_add(meta, pmt.intern("samples"), pmt.init_f32vector(self._samps_to_collect, data))
+                meta = pmt.dict_add(meta, pmt.intern("time"), pmt.from_double((self._time+rising)/self._samp_rate))
+
+                self.message_port_pub(pmt.intern('samps'), pmt.cons(meta, pmt.PMT_NIL))
                 self.message_port_pub(pmt.intern('fc'), pmt.cons(pmt.intern("center_freq"), pmt.from_double(fc)))
             elif self._state == 0: # samples are split between calls, first pass through
                 length = samps_available
+                self._detection_time = self._time - rising
                 self._samp_buffer[self._samps_collected:self._samps_collected+length-1] = in0[rising:rising+length-1]
                 self._samps_collected += length
                 # need more samples
@@ -66,14 +74,20 @@ class fsk_demod_ff(gr.sync_block):
                     mean_phase = (np.amax(data[:int(self._samps_to_collect/2)]) + np.amin(data[:int(self._samps_to_collect/2)])) / 2.
                     data = data - mean_phase
                     fc = self._samp_rate * (mean_phase/np.pi/2.)
-                    self.message_port_pub(pmt.intern('samps'), pmt.cons(pmt.intern("samples"), pmt.init_f32vector(self._samps_to_collect, data)))
+
+                    meta = pmt.make_dict()
+                    meta = pmt.dict_add(meta, pmt.intern("samples"), pmt.init_f32vector(self._samps_to_collect, data))
+                    meta = pmt.dict_add(meta, pmt.intern("time"), pmt.from_double(self._detection_time/self._samp_rate))
+
+                    self.message_port_pub(pmt.intern('samps'), pmt.cons(meta, pmt.PMT_NIL))
                     self.message_port_pub(pmt.intern('fc'), pmt.cons(pmt.intern("center_freq"), pmt.from_double(fc)))
                     self._samp_buffer = np.zeros((self._samps_to_collect,), dtype=np.float32)
                     self._state = 0
                     self._samps_collected = 0
+                    self._detection_time = 0
                 else: 
                     # need more samples
                     self._state = 1
-
+        self._time += len(input_items[0])
         return len(input_items[0])
 
