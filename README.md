@@ -5,6 +5,8 @@ You may need to add this to your .bashrc so gnuradio can find this after it's in
 export PYTHONPATH=/usr/local/lib/python3/dist-packages
 ```
 
+# Frequencies
+
 ``` python
 import numpy as np
 df = 0.3618 # kHz
