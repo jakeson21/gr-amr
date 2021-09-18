@@ -65,10 +65,10 @@ blocks:
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
-    start: '-60'
+    start: '-90'
     step: '1'
     stop: '0'
-    value: '-15'
+    value: '-40'
     widget: counter_slider
   states:
     bus_sink: false
@@ -97,7 +97,7 @@ blocks:
     bus_structure: null
     coordinate: [896, 12.0]
     rotation: 0
-    state: true
+    state: disabled
 - name: samp_rate
   id: variable
   parameters:
@@ -172,7 +172,7 @@ blocks:
     bits_per_second: '9600'
     center_freq: center_freq
     comment: ''
-    mag_trigger_level: '-15'
+    mag_trigger_level: mag_trigger_level
     maxoutbuf: '0'
     minoutbuf: '0'
     period: '0.0125'
@@ -190,17 +190,17 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    keyin: '''bits'''
-    keyout: '''bits'''
+    keyin: '''samples'''
+    keyout: '''samples'''
     maxoutbuf: '0'
     minoutbuf: '0'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [696, 508.0]
+    coordinate: [720, 452.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: blocks_msg_meta_to_pair_0_0
   id: blocks_msg_meta_to_pair
   parameters:
@@ -249,150 +249,6 @@ blocks:
     coordinate: [304, 12.0]
     rotation: 0
     state: true
-- name: qtgui_freq_sink_x_0
-  id: qtgui_freq_sink_x
-  parameters:
-    affinity: ''
-    alias: ''
-    alpha1: '1.0'
-    alpha10: '1.0'
-    alpha2: '1.0'
-    alpha3: '1.0'
-    alpha4: '1.0'
-    alpha5: '1.0'
-    alpha6: '1.0'
-    alpha7: '1.0'
-    alpha8: '1.0'
-    alpha9: '1.0'
-    autoscale: 'False'
-    average: '1.0'
-    axislabels: 'True'
-    bw: samp_rate
-    color1: '"blue"'
-    color10: '"dark blue"'
-    color2: '"red"'
-    color3: '"green"'
-    color4: '"black"'
-    color5: '"cyan"'
-    color6: '"magenta"'
-    color7: '"yellow"'
-    color8: '"dark red"'
-    color9: '"dark green"'
-    comment: ''
-    ctrlpanel: 'False'
-    fc: '0'
-    fftsize: '1024'
-    freqhalf: 'True'
-    grid: 'True'
-    gui_hint: ''
-    label: Relative Gain
-    label1: ''
-    label10: ''''''
-    label2: ''''''
-    label3: ''''''
-    label4: ''''''
-    label5: ''''''
-    label6: ''''''
-    label7: ''''''
-    label8: ''''''
-    label9: ''''''
-    legend: 'True'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    name: '""'
-    nconnections: '1'
-    norm_window: 'False'
-    showports: 'False'
-    tr_chan: '0'
-    tr_level: '0.0'
-    tr_mode: qtgui.TRIG_MODE_FREE
-    tr_tag: '""'
-    type: complex
-    units: dB
-    update_time: '0.01'
-    width1: '1'
-    width10: '1'
-    width2: '1'
-    width3: '1'
-    width4: '1'
-    width5: '1'
-    width6: '1'
-    width7: '1'
-    width8: '1'
-    width9: '1'
-    wintype: window.WIN_BLACKMAN_hARRIS
-    ymax: '-30'
-    ymin: '-80'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [480, 364.0]
-    rotation: 0
-    state: disabled
-- name: qtgui_time_raster_sink_x_0
-  id: qtgui_time_raster_sink_x
-  parameters:
-    affinity: ''
-    alias: ''
-    alpha1: '1.0'
-    alpha10: '1.0'
-    alpha2: '1.0'
-    alpha3: '1.0'
-    alpha4: '1.0'
-    alpha5: '1.0'
-    alpha6: '1.0'
-    alpha7: '1.0'
-    alpha8: '1.0'
-    alpha9: '1.0'
-    axislabels: 'True'
-    color1: '0'
-    color10: '0'
-    color2: '0'
-    color3: '0'
-    color4: '0'
-    color5: '0'
-    color6: '0'
-    color7: '0'
-    color8: '0'
-    color9: '0'
-    comment: ''
-    grid: 'False'
-    gui_hint: ''
-    label1: ''
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    mult: '[]'
-    name: '"Bits"'
-    ncols: int(9600*.0125)
-    nconnections: '1'
-    nrows: '256'
-    offset: '[]'
-    samp_rate: '9600'
-    type: msg_float
-    update_time: '0.01'
-    x_end_value: '0.0'
-    x_label: '""'
-    x_start_value: '0.0'
-    y_end_value: '0.0'
-    y_label: '""'
-    y_start_value: '0.0'
-    zmax: '1'
-    zmin: '0'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [672, 380.0]
-    rotation: 0
-    state: disabled
 - name: qtgui_time_sink_x_0
   id: qtgui_time_sink_x
   parameters:
@@ -446,9 +302,9 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: '""'
+    name: ''
     nconnections: '1'
-    size: '300'
+    size: '3000'
     srate: samp_rate_2
     stemplot: 'False'
     style1: '1'
@@ -479,17 +335,17 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: Amplitude
+    ylabel: Power
     ymax: '0'
-    ymin: '-60'
+    ymin: '-90'
     yunit: '""'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [960, 228.0]
+    coordinate: [960, 220.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: qtgui_time_sink_x_0_1_0
   id: qtgui_time_sink_x
   parameters:
@@ -545,7 +401,7 @@ blocks:
     marker9: '-1'
     name: '""'
     nconnections: '1'
-    size: '300'
+    size: '3000'
     srate: samp_rate_2
     stemplot: 'False'
     style1: '1'
@@ -576,7 +432,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: Amplitude
+    ylabel: Detection
     ymax: '2'
     ymin: '-1'
     yunit: '""'
@@ -584,9 +440,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [960, 148.0]
+    coordinate: [960, 140.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: qtgui_time_sink_x_1
   id: qtgui_time_sink_x
   parameters:
@@ -640,7 +496,7 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: '"Samples"'
+    name: ''
     nconnections: '1'
     size: '1024'
     srate: samp_rate_2
@@ -673,7 +529,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: Amplitude
+    ylabel: Samples
     ymax: '3'
     ymin: '-3'
     yunit: '""'
@@ -681,9 +537,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [960, 316.0]
+    coordinate: [976, 396.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: qtgui_time_sink_x_1_0
   id: qtgui_time_sink_x
   parameters:
@@ -778,9 +634,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [960, 412.0]
+    coordinate: [992, 484.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_waterfall_sink_x_0
   id: qtgui_waterfall_sink_x
   parameters:
@@ -839,7 +695,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [480, 460.0]
+    coordinate: [480, 364.0]
     rotation: 0
     state: enabled
 - name: rational_resampler_xxx_0
@@ -1317,11 +1173,9 @@ blocks:
 connections:
 - [amr_rx_heir_0, '0', qtgui_time_sink_x_0_1_0, '0']
 - [amr_rx_heir_0, '1', qtgui_time_sink_x_0, '0']
-- [amr_rx_heir_0, bits, blocks_msg_meta_to_pair_0, inmeta]
 - [amr_rx_heir_0, bits, blocks_msg_meta_to_pair_0_0, inmeta]
-- [amr_rx_heir_0, bits, qtgui_time_raster_sink_x_0, in]
-- [amr_rx_heir_0, samples, qtgui_time_sink_x_1, in]
-- [blocks_msg_meta_to_pair_0, outpair, qtgui_time_sink_x_1_0, in]
+- [amr_rx_heir_0, samples, blocks_msg_meta_to_pair_0, inmeta]
+- [blocks_msg_meta_to_pair_0, outpair, qtgui_time_sink_x_1, in]
 - [blocks_msg_meta_to_pair_0_0, outpair, tools_print_float_0, msg]
 - [blocks_multiply_const_vxx_0, '0', qtgui_waterfall_sink_x_0, '0']
 - [blocks_multiply_const_vxx_0, '0', rational_resampler_xxx_0, '0']

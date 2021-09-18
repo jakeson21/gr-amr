@@ -47,7 +47,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [840, 220.0]
+    coordinate: [840, 252.0]
     rotation: 0
     state: true
 - name: amr_symbols_to_bits_0
@@ -65,7 +65,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [832, 340.0]
+    coordinate: [832, 380.0]
     rotation: 0
     state: true
 - name: bits_per_second
@@ -257,7 +257,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1112, 180.0]
+    coordinate: [1112, 244.0]
     rotation: 0
     state: true
 - name: pad_sink_2_0
@@ -275,7 +275,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1120, 356.0]
+    coordinate: [1120, 396.0]
     rotation: 0
     state: true
 - name: pad_sink_2_1
@@ -293,7 +293,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1128, 252.0]
+    coordinate: [1112, 292.0]
     rotation: 0
     state: true
 - name: pad_source_1
