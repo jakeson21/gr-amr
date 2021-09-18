@@ -1,4 +1,6 @@
-You may need to add this to your .bashrc
+# Not AMR
+
+You may need to add this to your .bashrc so gnuradio can find this after it's installed.
 ``` bash
 export PYTHONPATH=/usr/local/lib/python3/dist-packages
 ```
